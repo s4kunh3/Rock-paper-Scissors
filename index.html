@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <script src="codigo.js" defer></script>
+    <title>Juego</title>
+</head>
+<body>
+    <div class="titulo">
+        <header>
+            Piedra Papel Tijera
+        </header>
+    </div>
+    <div class="contenedor">
+        <div class="output" id="player">
+            <img style="border: none;">
+        </div>
+        <div class="output">
+            <p style="color: white; font-weight: bold; font-size: 50px; ">VS</p>
+        </div>
+        <div class="output" id="oponent">
+            <img>
+        </div>
+    </div>
+    <div class="contenedor">
+        <div class="eleccion" id="btnPiedra" style="background-color: #87CEEB;">
+            <img src="./images/piedra.png"width="150px">
+        </div>
+        <div class="eleccion" id="btnPapel" style="background-color: #FF6347">
+            <img src="./images/papel.png"width="170px">
+        </div>
+        <div class="eleccion" id="btnTijera" style="background-color: #32CD32;">
+            <img src="./images/tijera.png" width="180px">
+        </div>
+    </div>
+    <div class="contenedor">
+        <button id="btnConfirmar">Confirmar</button>
+        <button id="btnReiniciar">Reiniciar</button>
+    </div>
+</body>
+</html>

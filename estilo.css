@@ -1,0 +1,107 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #FAF3E0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    -webkit-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
+}
+
+/* Titulo*/
+.titulo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh;
+    width: 100%;
+    margin-bottom: 2em;
+}
+
+.titulo header {
+    background-color: #37474F;
+    padding: 1em 2em;
+    color: whitesmoke;
+    font-weight: bold;
+    font-size: 2.5em;
+    border-radius: 50px;
+    text-align: center;
+}
+
+/*Output*/
+.contenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+    flex-wrap: wrap; 
+    margin: 2em 0; 
+    width: 90%; 
+}
+
+.output {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border-radius: 30px;
+    background-color: black;
+    width: 150px;
+    height: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.output img {
+    width: 150px;
+}
+
+/* Player Input */
+.eleccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1em;
+    border-radius: 30px;
+    transition: transform 0.5s, box-shadow 0.3s;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.5);
+    width: 120px;
+    height: 120px;
+}
+
+.eleccion img {
+    padding: 40px;
+}
+
+.eleccion:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    box-shadow: 5px 15px 15px rgba(0, 0, 0, 0.6);
+}
+
+button{
+    border: none;
+    background-color: black;
+    border-radius: 20px;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    padding: 10px;
+    transition: transform 0.5s
+}
+
+button:hover{
+    transform: scale(1.1);
+    cursor: pointer;
+    transition: transform 0.5s;
+}

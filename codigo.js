@@ -41,6 +41,28 @@ let btnPiedra = document.getElementById("btnPiedra");
 let btnPapel = document.getElementById("btnPapel");
 let btnTijera = document.getElementById("btnTijera");
 
+let punto = 1;
+function actualizarPuntos(resultado) {
+    const puntoElemento = document.getElementById(`punto${punto}`);
+    if(resultado === 'win'){
+        puntoElemento.classList.add('win');
+    }
+    else if(resultado === 'lose'){
+        puntoElemento.classList.add('lose');
+    }
+    punto ++;
+}
+
+function reiniciarPuntos() {
+    punto = 1;
+    for (let i = 1; i <= 3; i++) {
+        const puntoElemento = document.getElementById(`punto${i}`);
+        if (puntoElemento){
+            puntoElemento.className = 'punto';
+        }
+    }
+}
+
 btnPiedra.addEventListener("click", function() {
     playerImg.src = images[0];
 });
@@ -63,69 +85,100 @@ let body = document.querySelector("body");
 let bodyColor = window.getComputedStyle(body).backgroundColor;
 
 //Cambiar color fondo
-function changeBodyColor(color) {
+function cambiarColorFondo(color) {
     body.style.backgroundColor = color;
+    setTimeout(() => {
+        body.style.backgroundColor = '#FAF3E0'
+    }, 800);
 }
 
-console.log(bodyColor)
-
-//TODO manejar cundo se presiona mas de una vez
-btnReiniciar.addEventListener("click", function() {
-    startInterval();
-    playerImg.src= ''
-    changeBodyColor('rgb(250, 243, 224)');
-});
+var wins = 0;
+var loses = 0;
+var turnos = 3;
 
 btnConfirmar.addEventListener("click", function () {
     let eleccionOponente = Math.floor(Math.random() * images.length);
     stopInterval();
     oponentImg.src = images[eleccionOponente];
     
-
     let playerChoice = playerImg.src;
 
     switch (true) {
         case playerChoice == '':
-            changeBodyColor('rgb(255, 105, 97)')
+            actualizarPuntos('lose');
+            turnos--;
             break;
         case playerChoice.includes('piedra.png') && oponentImg.src.includes('piedra.png'):
             // Empate
-            changeBodyColor('rgb(253, 253, 150)');
+            cambiarColorFondo('rgb(253, 253, 150)');
             break;
         case playerChoice.includes('piedra.png') && oponentImg.src.includes('papel.png'):
             // Oponente gana
-            changeBodyColor('rgb(255, 105, 97)');
+            loses++;
+            actualizarPuntos('lose')            
+            turnos--;
             break;
         case playerChoice.includes('piedra.png') && oponentImg.src.includes('tijera.png'):
             // Jugador gana
-            changeBodyColor('rgb(180, 211, 178)');
+            wins++;
+            actualizarPuntos('win')
+            turnos--;
             break;
         case playerChoice.includes('papel.png') && oponentImg.src.includes('piedra.png'):
             // Jugador gana
-            changeBodyColor('rgb(180, 211, 178)');
+            wins++;
+            actualizarPuntos('win')
+            turnos--;
             break;
         case playerChoice.includes('papel.png') && oponentImg.src.includes('papel.png'):
             // Empate
-            changeBodyColor('rgb(253, 253, 150)'); 
+            cambiarColorFondo('rgb(253, 253, 150)'); 
             break;
         case playerChoice.includes('papel.png') && oponentImg.src.includes('tijera.png'):
             // Oponente gana
-            changeBodyColor('rgb(255, 105, 97)'); 
+            loses++;
+            actualizarPuntos('lose') 
+            turnos--
             break;
         case playerChoice.includes('tijera.png') && oponentImg.src.includes('piedra.png'):
             // Oponente gana
-            changeBodyColor('rgb(255, 105, 97)'); 
+            loses++;
+            actualizarPuntos('lose') 
+            turnos--;
             break;
         case playerChoice.includes('tijera.png') && oponentImg.src.includes('papel.png'):
             // Jugador gana
-            changeBodyColor('rgb(180, 211, 178)');
+            wins++;
+            actualizarPuntos('win')
+            turnos--;
             break;
         case playerChoice.includes('tijera.png') && oponentImg.src.includes('tijera.png'):
             // Empate
-            changeBodyColor('rgb(253, 253, 150)'); 
+            cambiarColorFondo('rgb(253, 253, 150)'); 
             break;
         default:
-            changeBodyColor('rgb(255, 105, 97)');
+            actualizarPuntos('lose')
             break;
     }
+
+    if (turnos === 0 && wins > loses) {
+    cambiarColorFondo('rgb(189, 236, 182)'); 
+    btnConfirmar.style.display = 'none';
+    }
+    if (turnos === 0 && loses > wins) {
+        cambiarColorFondo('rgb(255, 105, 97)');
+        btnConfirmar.style.display = 'none';
+}
 });
+
+btnReiniciar.addEventListener('click', function () {
+    reiniciarPuntos();
+    cambiarColorFondo('#FAF3E0');
+    startInterval();
+    playerImg.src = ''
+    btnConfirmar.style.display = 'block';
+    turnos = 3;
+    wins = 0;
+    loses = 0;
+});
+

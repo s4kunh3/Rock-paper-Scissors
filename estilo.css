@@ -11,6 +11,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    transition: background-color 0.5s ease-in-out;
 }
 
 img {
@@ -37,6 +38,32 @@ img {
     font-size: 2.5em;
     border-radius: 50px;
     text-align: center;
+}
+
+/* Puntos */
+.puntos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin: 1px 0;
+    background-color: black;
+    padding: 20px;
+    border-radius: 20px;
+    gap: 10px;
+}
+.punto {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: grey;
+    margin: 0 10px;
+}
+
+.punto.win{
+    background-color: rgb(180, 211, 178);
+}
+.punto.lose{
+    background-color: rgb(255, 105, 97);
 }
 
 /*Output*/

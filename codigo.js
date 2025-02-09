@@ -1,45 +1,50 @@
-/*
-Pasos:
-
-Obtener el input del jugador (piedra papel o tijera)
-
-Mostrar el input en id "player" 
-*/
+const COLOR_WIN = 'rgb(189, 236, 182)';
+const COLOR_LOSE = 'rgb(255, 105, 97)';
+const COLOR_TIE = 'rgb(253, 253, 150)';
+const COLOR_RESET = '#FAF3E0';
 
 // Manejar la imagen del oponente
-let oponent = document.getElementById("oponent");
-let oponentImg = oponent.querySelector("img");
+const oponent = document.getElementById("oponent");
+const oponentImg = oponent.querySelector("img");
 let index = 0;
 
-let images = ['./images/piedra.png','./images/papel.png','images/tijera.png'];
+const images = ['./images/piedra.png', './images/papel.png', './images/tijera.png'];
 
-// Loop de imagenes del oponente
-let intervalo = setInterval(function() {
-    oponentImg.src = images[index];
-    index = (index + 1) % images.length;
-}, 1000)
+let isLooping = false;
+
+function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function startImageLoop(imgElement, imgArray) {
+    isLooping = true;
+    while (isLooping) {
+        imgElement.src = imgArray[index];
+        index = (index + 1) % imgArray.length;
+        await delay(1000);
+    }
+}
 
 // Funcion para parar el loop
 function stopInterval() {
-    clearInterval(intervalo);
+    isLooping = false;
 }
 
 // Funcion para reiniciar el loop
 function startInterval() {
-    intervalo = setInterval(function() {
-        oponentImg.src = images[index];
-        index = (index + 1) % images.length;
-    }, 1000);
+    if (!isLooping) {
+        startImageLoop(oponentImg, images);
+    }
 }
 
 //Manejar la imagen del jugador
-let player = document.getElementById("player");
-let playerImg = player.querySelector("img");
+const player = document.getElementById("player");
+const playerImg = player.querySelector("img");
 
 //Botones
-let btnPiedra = document.getElementById("btnPiedra");
-let btnPapel = document.getElementById("btnPapel");
-let btnTijera = document.getElementById("btnTijera");
+const btnPiedra = document.getElementById("btnPiedra");
+const btnPapel = document.getElementById("btnPapel");
+const btnTijera = document.getElementById("btnTijera");
 
 let punto = 1;
 function actualizarPuntos(resultado) {
@@ -110,7 +115,7 @@ btnConfirmar.addEventListener("click", function () {
             break;
         case playerChoice.includes('piedra.png') && oponentImg.src.includes('piedra.png'):
             // Empate
-            cambiarColorFondo('rgb(253, 253, 150)');
+            cambiarColorFondo(COLOR_TIE);
             break;
         case playerChoice.includes('piedra.png') && oponentImg.src.includes('papel.png'):
             // Oponente gana
@@ -132,7 +137,7 @@ btnConfirmar.addEventListener("click", function () {
             break;
         case playerChoice.includes('papel.png') && oponentImg.src.includes('papel.png'):
             // Empate
-            cambiarColorFondo('rgb(253, 253, 150)'); 
+            cambiarColorFondo(COLOR_TIE); 
             break;
         case playerChoice.includes('papel.png') && oponentImg.src.includes('tijera.png'):
             // Oponente gana
@@ -154,28 +159,31 @@ btnConfirmar.addEventListener("click", function () {
             break;
         case playerChoice.includes('tijera.png') && oponentImg.src.includes('tijera.png'):
             // Empate
-            cambiarColorFondo('rgb(253, 253, 150)'); 
+            cambiarColorFondo(COLOR_TIE); 
             break;
         default:
             actualizarPuntos('lose')
             break;
     }
 
-    if (turnos === 0 && wins > loses) {
-    cambiarColorFondo('rgb(189, 236, 182)'); 
-    btnConfirmar.style.display = 'none';
-    }
-    if (turnos === 0 && loses > wins) {
-        cambiarColorFondo('rgb(255, 105, 97)');
+
+    if (turnos === 0){
+        if (wins > loses){
+            cambiarColorFondo(COLOR_WIN);
+        }
+        else if (loses > wins){
+            cambiarColorFondo(COLOR_LOSE);
+        }
         btnConfirmar.style.display = 'none';
-}
+    }
 });
 
 btnReiniciar.addEventListener('click', function () {
-    reiniciarPuntos();
-    cambiarColorFondo('#FAF3E0');
+    stopInterval();
     startInterval();
-    playerImg.src = ''
+    reiniciarPuntos();
+    cambiarColorFondo(COLOR_RESET);
+    playerImg.src = '';
     btnConfirmar.style.display = 'block';
     turnos = 3;
     wins = 0;

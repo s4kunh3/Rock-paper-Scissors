@@ -24,7 +24,6 @@ async function startImageLoop(imgElement, imgArray) {
         await delay(1000);
     }
 }
-
 // Funcion para parar el loop
 function stopInterval() {
     isLooping = false;
